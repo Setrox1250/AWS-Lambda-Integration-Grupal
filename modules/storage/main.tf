@@ -38,3 +38,51 @@ resource "aws_s3_bucket_versioning" "images" {
     status = "Enabled"
   }
 }
+
+resource "aws_s3_bucket_lifecycle_configuration" "images" {
+  bucket = aws_s3_bucket.images.id
+
+  depends_on = [aws_s3_bucket_versioning.images]
+
+  rule {
+    id     = "expire-uploads"
+    status = "Enabled"
+
+    filter {
+      prefix = local.uploads_prefix
+    }
+
+    expiration {
+      days = 30
+    }
+
+    noncurrent_version_expiration {
+      noncurrent_days = 7
+    }
+
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 7
+    }
+  }
+
+  rule {
+    id     = "expire-processed"
+    status = "Enabled"
+
+    filter {
+      prefix = local.processed_prefix
+    }
+
+    expiration {
+      days = 90
+    }
+
+    noncurrent_version_expiration {
+      noncurrent_days = 7
+    }
+
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 7
+    }
+  }
+}
