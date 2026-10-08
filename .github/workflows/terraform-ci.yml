@@ -1,0 +1,40 @@
+
+name: Terraform checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        path:
+          - envs/dev
+          - envs/qa
+          - envs/prod
+          - modules/network
+          - modules/storage
+          - modules/compute
+          - modules/api
+          - modules/observability
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform format
+        run: terraform fmt -check -recursive
+
+      - name: Terraform init
+        run: terraform -chdir=${{ matrix.path }} init -backend=false -input=false
+
+      - name: Terraform validate
+        run: terraform -chdir=${{ matrix.path }} validate
