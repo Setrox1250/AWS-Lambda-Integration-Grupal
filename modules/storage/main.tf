@@ -87,7 +87,9 @@ resource "aws_s3_bucket_lifecycle_configuration" "images" {
   }
 }
 
+#********
 # SQS: cola principal + DLQ
+#********
 
 resource "aws_sqs_queue" "dlq" {
   name                      = "${var.name_prefix}-image-dlq"
@@ -114,4 +116,56 @@ resource "aws_sqs_queue_redrive_allow_policy" "dlq" {
     redrivePermission = "byQueue"
     sourceQueueArns   = [aws_sqs_queue.main.arn]
   })
+}
+
+#********
+# Permiso S3 -> SQS (restringido por bucket y cuenta)
+#********
+
+data "aws_iam_policy_document" "queue" {
+  statement {
+    sid       = "AllowS3SendMessage"
+    effect    = "Allow"
+    actions   = ["sqs:SendMessage"]
+    resources = [aws_sqs_queue.main.arn]
+
+    principals {
+      type        = "Service"
+      identifiers = ["s3.amazonaws.com"]
+    }
+
+    condition {
+      test     = "ArnEquals"
+      variable = "aws:SourceArn"
+      values   = [aws_s3_bucket.images.arn]
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "aws:SourceAccount"
+      values   = [local.account_id]
+    }
+  }
+}
+
+resource "aws_sqs_queue_policy" "main" {
+  queue_url = aws_sqs_queue.main.id
+  policy    = data.aws_iam_policy_document.queue.json
+}
+
+
+#********
+# Evento: solo ObjectCreated bajo uploads/ 
+#********
+
+resource "aws_s3_bucket_notification" "uploads" {
+  bucket = aws_s3_bucket.images.id
+
+  queue {
+    queue_arn     = aws_sqs_queue.main.arn
+    events        = ["s3:ObjectCreated:*"]
+    filter_prefix = local.uploads_prefix
+  }
+
+  depends_on = [aws_sqs_queue_policy.main]
 }
