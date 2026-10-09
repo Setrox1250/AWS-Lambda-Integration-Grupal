@@ -1,0 +1,15 @@
+{
+  "name": "upload-lambda",
+  "version": "1.0.0",
+  "description": "Lambda for uploading images via HTTP API",
+  "type": "module",
+  "main": "index.mjs",
+  "scripts": {
+    "build": "npm install && node -e \"require('child_process').execSync('zip -r upload.zip . -x \\\"*.zip\\\"')\""
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.500.0",
+    "busboy": "^1.6.0",
+    "uuid": "^9.0.1"
+  }
+}
