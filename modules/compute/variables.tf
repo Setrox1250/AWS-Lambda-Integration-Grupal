@@ -23,12 +23,12 @@ variable "private_subnet_ids" {
   }
 }
 
-variable "upload_lambda_sg_id" {
+variable "sg_upload_lambda_id" {
   description = "Security Group de la Lambda Upload."
   type        = string
 }
 
-variable "crop_lambda_sg_id" {
+variable "sg_crop_lambda_id" {
   description = "Security Group de la Lambda Crop."
   type        = string
 }
