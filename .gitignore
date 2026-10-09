@@ -15,6 +15,12 @@ override.tf.json
 
 # Node.js / Lambda
 node_modules/
+*.zip
+lambdas/crop/dist/
+lambdas/crop/build/
+.terraform/
+*.tfstate*
+*.tfplan
 
 # Credenciales
 .env

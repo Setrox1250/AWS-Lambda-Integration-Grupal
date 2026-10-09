@@ -1,0 +1,17 @@
+{
+    "name": "image-processor-crop",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "description": "Lambda Crop: PNG circular 40x40 desde uploads/ hacia processed/",
+    "scripts": {
+        "check": "node --check index.mjs && node --check crop-image.mjs",
+        "test": "node --test test/crop.test.mjs"
+    },
+    "dependencies": {
+        "sharp": "0.33.5"
+    },
+    "devDependencies": {
+        "@aws-sdk/client-s3": "^3.600.0"
+    }
+}
