@@ -8,6 +8,11 @@ variable "name_prefix" {
   type        = string
 }
 
+variable "upload_function_arn" {
+  description = "ARN de la funcion Lambda Upload"
+  type        = string
+}
+
 variable "upload_invoke_arn" {
   description = "ARN de invocacion de la funcion Lambda Upload para API Gateway"
   type        = string
