@@ -23,7 +23,7 @@ resource "aws_lambda_function" "upload" {
 
   vpc_config {
     subnet_ids         = var.private_subnet_ids
-    security_group_ids = [var.upload_lambda_sg_id]
+    security_group_ids = [var.sg_upload_lambda_id]
   }
 
   environment {
@@ -55,7 +55,7 @@ resource "aws_lambda_function" "crop" {
 
   vpc_config {
     subnet_ids         = var.private_subnet_ids
-    security_group_ids = [var.crop_lambda_sg_id]
+    security_group_ids = [var.sg_crop_lambda_id]
   }
 
   environment {
