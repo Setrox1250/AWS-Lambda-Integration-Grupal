@@ -1,0 +1,9 @@
+output "api_endpoint" {
+  description = "URL base del API Gateway"
+  value       = aws_apigatewayv2_api.http_api.api_endpoint
+}
+
+output "api_id" {
+  description = "ID del API Gateway generado"
+  value       = aws_apigatewayv2_api.http_api.id
+}
