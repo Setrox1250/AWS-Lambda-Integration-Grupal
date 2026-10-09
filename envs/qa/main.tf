@@ -34,11 +34,11 @@ module "compute" {
 }
 
 module "api" {
-  source                      = "../../modules/api"
-  environment                 = var.environment
-  name_prefix                 = local.name_prefix
-  upload_invoke_arn       = module.compute.upload_invoke_arn
-  upload_function_arn     = module.compute.upload_function_arn
+  source              = "../../modules/api"
+  environment         = var.environment
+  name_prefix         = local.name_prefix
+  upload_invoke_arn   = module.compute.upload_invoke_arn
+  upload_function_arn = module.compute.upload_function_arn
 }
 
 module "observability" {
