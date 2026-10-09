@@ -58,8 +58,8 @@ SQS Interface Endpoint ──▶ ENI en private-a y private-b
 | `vpc_id` | ID de la VPC |
 | `public_subnet_ids` | Lista `[az-a, az-b]` de subnets públicas |
 | `private_subnet_ids` | Lista `[az-a, az-b]` de subnets privadas |
-| `upload_lambda_sg_id` | ID de `sg-upload-lambda` |
-| `crop_lambda_sg_id` | ID de `sg-crop-lambda` |
+| `sg_upload_lambda_id` | ID de `sg-upload-lambda` |
+| `sg_crop_lambda_id` | ID de `sg-crop-lambda` |
 | `s3_endpoint_id` | ID del Gateway Endpoint de S3 |
 | `sqs_endpoint_id` | ID del Interface Endpoint de SQS |
 | `nat_gateway_ids` | Lista `[nat-a, nat-b]` |

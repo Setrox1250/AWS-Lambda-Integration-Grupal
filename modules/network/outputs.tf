@@ -18,12 +18,12 @@ output "private_subnet_ids" {
   value       = [aws_subnet.private_a.id, aws_subnet.private_b.id]
 }
 
-output "upload_lambda_sg_id" {
+output "sg_upload_lambda_id" {
   description = "ID del Security Group de la Upload Lambda (sin ingress)"
   value       = aws_security_group.upload_lambda.id
 }
 
-output "crop_lambda_sg_id" {
+output "sg_crop_lambda_id" {
   description = "ID del Security Group de la Crop Lambda (sin ingress)"
   value       = aws_security_group.crop_lambda.id
 }
